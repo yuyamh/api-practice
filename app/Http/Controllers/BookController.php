@@ -67,6 +67,11 @@ class BookController extends Controller
      */
     public function deleteById(int $id)
     {
-        return "Called deleteById";
+        $post = Book::find($id);
+        $post->delete();
+
+        return response()->json([
+            'message' => 'deleted book'
+        ], 200);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Book;
 
 class BookController extends Controller
 {
@@ -35,7 +36,15 @@ class BookController extends Controller
      */
     public function create(Request $request)
     {
-        return "Called create";
+        $book = new Book();
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->memo = $request->memo;
+        $book->save();
+
+        return response()->json([
+            'message' => 'created book'
+        ], 201);
     }
 
     /**
@@ -58,6 +67,11 @@ class BookController extends Controller
      */
     public function deleteById(int $id)
     {
-        return "Called deleteById";
+        $post = Book::find($id);
+        $post->delete();
+
+        return response()->json([
+            'message' => 'deleted book'
+        ], 200);
     }
 }
